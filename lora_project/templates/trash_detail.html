@@ -1,0 +1,14 @@
+
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{% endblock %}
+{% block css %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ trash_can.tloaction_name }}</h1>
+    {% for trash_info in trash_infomation %}
+        <p>{{ trash_info.trash_history_height }}</p>
+    {% endfor %}
+{% endblock %}

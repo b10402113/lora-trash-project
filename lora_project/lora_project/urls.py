@@ -17,6 +17,6 @@ from django.contrib import admin
 from django.urls import path,include
 from lora_garbage_app import urls
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('',include('lora_garbage_app.urls'))
 ]

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{% endblock %}
+{% block css %}
+    <link href="{% static 'css/overview.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+<div class="content">
+    <div class="garbage" style="display: flex;">
+        {% for trash_can in trash_cans %}
+            <div class="card" style="width: 13rem; margin: 20px;">
+                <a href="trash_detail/{{ trash_can.id }}" style="display: block;">
+                    <img class="card-img-top" src="{% static 'img/trash_can.png' %}" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-title" style="text-align: center;">{{ trash_can.tloaction_name }}</p>
+                    </div>
+                </a>
+
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
