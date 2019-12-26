@@ -8,4 +8,16 @@
 {% block content %}
     <h1>垃圾分佈</h1>
     <img src="{% static 'img/image.jpg' %}" alt="" width="800px">
+    <form method="post" action="index">
+        選擇起點： <br />
+
+        <select name=items[]" size="4" multiple="multiple">
+        {% for trash_can in trash_cans %}
+            <option value="{{ trash_can.id }}">{{ trash_can.tloaction_name }}</option>
+        {% endfor %}
+
+        </select>
+        <input type="submit" value="產生路徑" />
+    </form>
+
 {% endblock %}

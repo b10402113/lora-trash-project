@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="content">
-    <div class="garbage" style="display: flex;">
+    <div class="garbage" style="display: flex; flex-wrap: wrap">
         {% for trash_can in trash_cans %}
             <div class="card" style="width: 13rem; margin: 20px;">
                 <a href="trash_detail/{{ trash_can.id }}" style="display: block;">
@@ -20,6 +20,8 @@
 
             </div>
         {% endfor %}
+
+
     </div>
 
 </div>

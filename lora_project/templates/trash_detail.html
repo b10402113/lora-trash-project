@@ -1,14 +1,93 @@
-
 {% extends 'base.html' %}
 {% load staticfiles %}
 {% block title %}
 {% endblock %}
 {% block css %}
+    <link href="{% static 'css/trash_detail.css' %}" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 {% endblock %}
 
 {% block content %}
-    <h1>{{ trash_can.tloaction_name }}</h1>
-    {% for trash_info in trash_infomation %}
-        <p>{{ trash_info.trash_history_height }}</p>
-    {% endfor %}
+    <p class="trash_can_title">{{ trash_can.tloaction_name }} &nbsp;&nbsp;&nbsp;垃圾桶資料</p>
+    <div class="trash_current_data">
+        <div class="trash_weight_field">
+            <p class="trash_data">{{ trash_can.tlocation_weight }}</p>
+            <p class="unit">kg</p>
+        </div>
+        <div class="trash_weight_field">
+            <p class="trash_data">{{ trash_can.tlocation_hight }}</p>
+            <p class="unit">cm</p>
+        </div>
+    </div>
+    <p class="trash_can_title">{{ trash_can.tloaction_name }} &nbsp;&nbsp;&nbsp;歷史圖表</p>
+
+    <div class="trash_history_graph" style="width: 800px;height: 200px;">
+        <canvas id="weightchart" width="400" height="300"></canvas>
+        <canvas id="heightchart" width="400" height="300"></canvas>
+    </div>
+
+
+    {#    <div>#}
+    {#        {% for trash_info in trash_infomation %}#}
+    {#            <p>{{ trash_info.trash_history_height }}</p>#}
+    {#            <p>{{ trash_info.trash_history_time }}</p>#}
+    {#        {% endfor %}#}
+    {#    </div>#}
+    {% block jquery %}
+        <script>
+            {#        https://code.ziqiangxuetang.com/django/django-json-templates.html  #}
+            {#var endpoint = '/api/get_trash_data/{{ trash_id }}';#}
+
+
+            var time =
+            {{ data.time|safe }}
+            var weights =
+            {{ data.weight|safe }}
+            var heights = {{ data.height|safe }}
+                console.log(time)
+            var ctx = document.getElementById("weightchart").getContext('2d');
+            var ctx2 = document.getElementById("heightchart").getContext('2d');
+
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: time,
+                    datasets: [{
+                        label: '重量顯示', // Name the series
+                        data: weights, // Specify the data values array
+                        fill: false,
+                        borderColor: '#2196f3', // Add custom color border (Line)
+                        backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
+                        borderWidth: 1, // Specify bar border width,
+                    }]
+                },
+                options: {
+                    responsive: true, // Instruct chart js to respond nicely.
+                    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                }
+            });
+            var myChart2 = new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: time,
+                    datasets: [{
+                        label: '高度顯示', // Name the series
+                        data: heights, // Specify the data values array
+                        fill: false,
+                        borderColor: '#ccc', // Add custom color border (Line)
+                        backgroundColor: '#ccc', // Add custom color background (Points and Fill)
+                        borderWidth: 1, // Specify bar border width,
+                    }]
+                },
+                options: {
+                    responsive: true, // Instruct chart js to respond nicely.
+                    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                }
+            });
+
+        </script>
+
+
+    {% endblock %}
+
 {% endblock %}

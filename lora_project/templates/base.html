@@ -16,6 +16,10 @@
 
   <!-- Custom styles for this template -->
   <link href="{% static 'css/simple-sidebar.css' %}" rel="stylesheet">
+  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    {% block css %}
+    {% endblock %}
 
 </head>
 
@@ -81,8 +85,7 @@
   <!-- /#wrapper -->
 
   <!-- Bootstrap core JavaScript -->
-  <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
 
   <!-- Menu Toggle Script -->
   <script>
@@ -92,6 +95,12 @@
     });
 
   </script>
+  {% block jquery %}
+
+  {% endblock %}
+  {% block javascript %}
+
+  {% endblock %}
 
 </body>
 
