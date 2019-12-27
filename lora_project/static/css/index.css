@@ -1,0 +1,14 @@
+.path_generate_section{
+    height: 300px;
+}
+.form{
+    display: flex;
+}
+.dropdown_list{
+    padding: 20px;
+}
+.path_btn{
+    margin-top: 20px;
+    height: 40px;
+    margin-right: 30px;
+}

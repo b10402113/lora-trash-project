@@ -1,8 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from . import models
 from . import trash_collection
 from django.http import HttpResponse
-# trash_collection.collect_trash()
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from datetime import datetime
@@ -61,3 +60,36 @@ def post_trash_data(request,trash_id):
         return HttpResponse("成功")
     else:
         return HttpResponse("失敗")
+
+def path_generate(request):
+    if request.method == 'POST':
+        if request.POST.get('start_location'):
+            # print(request.POST.get('start_location'))
+            start_trash_can = models.TrashInfo.objects.get(id=request.POST.get('start_location'))
+            other_trash_cans = models.TrashInfo.objects.exclude(id= request.POST.get('start_location'))
+
+            # start 座標
+            print("====最佳路徑程式開始====")
+
+            start = (start_trash_can.tlocation_x,start_trash_can.tlocation_y)
+            print("起點為" + start_trash_can.tloaction_name + "座標為" + str(start))
+
+            # 其他座標
+            vertices = {}
+            for other_trash_can in other_trash_cans:
+                coordinate = (other_trash_can.tlocation_x,other_trash_can.tlocation_y)
+                vertices[coordinate] = (other_trash_can.tlocation_weight,other_trash_can.tlocation_hight)
+
+            # 印出其他座標資料
+            print(vertices)
+
+            # 呼叫勝安trash_collectionAPI
+            path_handler = trash_collection.collect_trash()
+            output = path_handler.setting(start, vertices)
+
+            # 輸出 output
+            print(output)
+            print("====最佳路徑程式結束====")
+            return redirect(index)
+        else:
+            return redirect(index)

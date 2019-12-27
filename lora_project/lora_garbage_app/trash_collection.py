@@ -50,7 +50,7 @@ class collect_trash:
         return edge_distance
 
 
-test = {(5, 0): (5, 9), (15, 6): (1, 3), (6, 8): (6, 6), (5, 5): (0, 7)}
-a = collect_trash()
-output = a.setting((15, 6), test)
-print(output)
+# test = {(5, 0): (5, 9), (15, 6): (1, 3), (6, 8): (6, 6), (5, 5): (0, 7)}
+# a = collect_trash()
+# output = a.setting((15, 6), test)
+# print(output)

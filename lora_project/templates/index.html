@@ -3,21 +3,45 @@
 {% block title %}
 {% endblock %}
 {% block css %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
 {% endblock %}
 
 {% block content %}
-    <h1>垃圾分佈</h1>
-    <img src="{% static 'img/image.jpg' %}" alt="" width="800px">
-    <form method="post" action="index">
-        選擇起點： <br />
+    <h1>垃圾桶資訊</h1>
+    <img src="{% static 'img/image.jpg' %}" alt="" width="800px" />
+    
+    <div class="path_generate_section">
+        <form method="post" action="api/path_generate/" class="form">
+            <p class="path_btn">選擇起點</p>
+            <div class="dropdown_list">
+              <select class="selectpicker" name="start_location">
+                  {% for trash_can in trash_cans %}
+                <option class="dropdown-item" value="{{ trash_can.id }}" >{{ trash_can.tloaction_name }}</option>
+                  {% endfor %}
+              </select>
+            </div>
+            <p class="path_btn" id="text">你選擇的起點為：</p>
+            <input class="btn btn-primary path_btn" id="pathBtn" type="submit" value="產生路徑" />
+        </form>
+    </div>
 
-        <select name=items[]" size="4" multiple="multiple">
-        {% for trash_can in trash_cans %}
-            <option value="{{ trash_can.id }}">{{ trash_can.tloaction_name }}</option>
-        {% endfor %}
 
-        </select>
-        <input type="submit" value="產生路徑" />
-    </form>
 
+{% endblock %}
+{% block javascript %}
+    <script>
+        // var btn = document.getElementById('pathBtn');
+        // btn.onclick = function(){
+        //     var text = document.getElementById('text');
+        //     text.innerText = "你選擇的起點為：研陽大樓"
+        // }
+    </script>
 {% endblock %}
