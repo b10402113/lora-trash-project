@@ -15,8 +15,10 @@
 {% endblock %}
 
 {% block content %}
-    <h1>垃圾桶資訊</h1>
-    <img src="{% static 'img/image.jpg' %}" alt="" width="800px" />
+    <div class="title-field">
+            收垃圾路徑繪圖
+    </div>
+    <img class="path-img" src="{% static 'img/image.jpg' %}" alt=""  />
     
     <div class="path_generate_section">
         <form method="post" action="api/path_generate/" class="form">
@@ -24,14 +26,21 @@
             <div class="dropdown_list">
               <select class="selectpicker" name="start_location">
                   {% for trash_can in trash_cans %}
-                <option class="dropdown-item" value="{{ trash_can.id }}" >{{ trash_can.tloaction_name }}</option>
+                      {% if trash_can.tloaction_name == location %}
+                          <option class="dropdown-item" value="{{ trash_can.id }}" selected="selected" >{{ trash_can.tloaction_name }}</option>
+                      {% else %}
+                        <option class="dropdown-item" value="{{ trash_can.id }}" >{{ trash_can.tloaction_name }}</option>
+                      {% endif %}
                   {% endfor %}
               </select>
             </div>
-            <p class="path_btn" id="text">你選擇的起點為：</p>
             <input class="btn btn-primary path_btn" id="pathBtn" type="submit" value="產生路徑" />
         </form>
+
+        <img class="path-img" src="/display_image" alt="" />
+
     </div>
+
 
 
 

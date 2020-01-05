@@ -3,26 +3,58 @@
 {% block title %}
 {% endblock %}
 {% block css %}
-    <link href="{% static 'css/overview.css' %}" rel="stylesheet"/>
+{#    <link href="{% static 'css/overview.css' %}" rel="stylesheet"/>#}
 {% endblock %}
 
 {% block content %}
-<div class="content">
-    <div class="garbage" style="display: flex; flex-wrap: wrap">
-        {% for trash_can in trash_cans %}
-            <div class="card" style="width: 13rem; margin: 20px;">
-                <a href="trash_detail/{{ trash_can.id }}" style="display: block;">
-                    <img class="card-img-top" src="{% static 'img/trash_can.png' %}" alt="Card image cap">
-                    <div class="card-body">
-                        <p class="card-title" style="text-align: center;">{{ trash_can.tloaction_name }}</p>
+    <div class="content">
+        <div class="title-field">
+            垃圾桶資訊
+        </div>
+        <div class="garbage" >
+            <div class="row" >
+                {% for trash_can in trash_cans %}
+                    <div class="card col-xs-6 col-sm-4 col-md-2" style="padding: 0; margin: 20px">
+                        <a href="trash_detail/{{ trash_can.id }}"  style="display: block; color: #304556;">
+                            <img class="card-img-top" src="{% static 'img/trash_can.png' %}" alt="Card image cap">
+                            <div class="card-body" style="height: 80px">
+                                <p class="card-title" style="text-align: center;">{{ trash_can.tloaction_name }}</p>
+                                <div class="trash-weight" style="display: none;">{{ trash_can.tlocation_weight }}</div>
+                            </div>
+                        </a>
                     </div>
-                </a>
-
+                {% endfor %}
             </div>
-        {% endfor %}
 
+
+        </div>
 
     </div>
+{% endblock %}
 
-</div>
+{% block javascript %}
+    <script>
+        var weights = document.getElementsByClassName('trash-weight');
+        var cards = document.getElementsByClassName('card-body');
+        $(window).resize(function() {
+          if(window.innerWidth < 300){
+              console.log("hei")
+          }
+        });
+        for (var i = 0; i < weights.length; i++) {
+            weight = weights[i].innerHTML;
+            if (weight >= 0 && weight <= 10) {
+                cards[i].style.backgroundColor = '#41CCAE';
+            } else if (weight > 10 && weight <= 15) {
+                cards[i].style.backgroundColor = '#F2E896';
+            } else if(weight >= 15 && weight <= 20){
+                cards[i].style.backgroundColor = '#FFD9E7';
+            } else{
+                cards[i].style.backgroundColor = '#FF3232';
+                cards[i].style.color = 'white';
+
+            }
+        }
+
+    </script>
 {% endblock %}

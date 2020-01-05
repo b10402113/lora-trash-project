@@ -11,83 +11,243 @@
     <p class="trash_can_title">{{ trash_can.tloaction_name }} &nbsp;&nbsp;&nbsp;垃圾桶資料</p>
     <div class="trash_current_data">
         <div class="trash_weight_field">
-            <p class="trash_data">{{ trash_can.tlocation_weight }}</p>
-            <p class="unit">kg</p>
+            <p class="trash_data trash_current_weight">{{ trash_can.tlocation_weight }}</p>
+            <p class="unit">g</p>
         </div>
         <div class="trash_weight_field">
-            <p class="trash_data">{{ trash_can.tlocation_hight }}</p>
+            <p class="trash_data trash_current_height">{{ trash_can.tlocation_hight }}</p>
             <p class="unit">cm</p>
         </div>
     </div>
     <p class="trash_can_title">{{ trash_can.tloaction_name }} &nbsp;&nbsp;&nbsp;歷史圖表</p>
 
-    <div class="trash_history_graph" style="width: 800px;height: 200px;">
-        <canvas id="weightchart" width="400" height="300"></canvas>
-        <canvas id="heightchart" width="400" height="300"></canvas>
+    <div class="trash_history_graph" style="width: 80%; height: 300px; ">
+        <canvas id="weightchart"></canvas>
     </div>
-
-
-    {#    <div>#}
-    {#        {% for trash_info in trash_infomation %}#}
-    {#            <p>{{ trash_info.trash_history_height }}</p>#}
-    {#            <p>{{ trash_info.trash_history_time }}</p>#}
-    {#        {% endfor %}#}
+    <div class="trash_history_graph" style="width: 80%; height: 300px; margin: 0 auto;">
+        <canvas id="heightchart"></canvas>
+    </div>
+    {#    <canvas id="heightchart" width="400" height="300"></canvas>#}
+    {#    <canvas id="weight_statics_chart"></canvas>#}
+    <p class="trash_can_title">{{ trash_can.tloaction_name }} &nbsp;&nbsp;&nbsp;重量與高度統計</p>
+    <div class="trash_statics">
+        <div class="trash_history_graph" style="height: 180px;">
+            <p class="graph_title">高度</p>
+            <canvas id="weight_statics_chart"></canvas>
+        </div>
+        <div class="trash_history_graph" style=" height: 180px;">
+            <p class="graph_title">重量</p>
+            <canvas id="height_statics_chart"></canvas>
+        </div>
+    </div>
+    <p class="trash_can_title">{{ trash_can.tloaction_name }} &nbsp;&nbsp;每小時平均重量與高度統計</p>
+    <div class="trash_statics">
+        <div class="trash_history_graph" style=" height: 200px;">
+            <canvas id="time_bar_chart_weights"></canvas>
+        </div>
+        <div class="trash_history_graph" style=" height: 200px;">
+            <canvas id="time_bar_chart_heights"></canvas>
+        </div>
+    </div>
+    <p class="page-footer"></p>
+    {#    <p class="trash_can_title">{{ trash_can.tloaction_name }} &nbsp;&nbsp;&nbsp;高度統計</p>#}
+    {#    <div class="trash_history_graph" style="width: 80%; height: 200px;">#}
+    {#        <canvas id="height_statics_chart"></canvas>#}
     {#    </div>#}
-    {% block jquery %}
-        <script>
-            {#        https://code.ziqiangxuetang.com/django/django-json-templates.html  #}
-            {#var endpoint = '/api/get_trash_data/{{ trash_id }}';#}
 
-
-            var time =
-            {{ data.time|safe }}
-            var weights =
-            {{ data.weight|safe }}
-            var heights = {{ data.height|safe }}
-                console.log(time)
-            var ctx = document.getElementById("weightchart").getContext('2d');
-            var ctx2 = document.getElementById("heightchart").getContext('2d');
-
-            var myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: time,
-                    datasets: [{
-                        label: '重量顯示', // Name the series
-                        data: weights, // Specify the data values array
-                        fill: false,
-                        borderColor: '#2196f3', // Add custom color border (Line)
-                        backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
-                        borderWidth: 1, // Specify bar border width,
-                    }]
-                },
-                options: {
-                    responsive: true, // Instruct chart js to respond nicely.
-                    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
-                }
-            });
-            var myChart2 = new Chart(ctx2, {
-                type: 'line',
-                data: {
-                    labels: time,
-                    datasets: [{
-                        label: '高度顯示', // Name the series
-                        data: heights, // Specify the data values array
-                        fill: false,
-                        borderColor: '#ccc', // Add custom color border (Line)
-                        backgroundColor: '#ccc', // Add custom color background (Points and Fill)
-                        borderWidth: 1, // Specify bar border width,
-                    }]
-                },
-                options: {
-                    responsive: true, // Instruct chart js to respond nicely.
-                    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
-                }
-            });
-
-        </script>
-
-
-    {% endblock %}
 
 {% endblock %}
+{% block jquery %}
+    <script>
+        {#        https://code.ziqiangxuetang.com/django/django-json-templates.html  #}
+        {#var endpoint = '/api/get_trash_data/{{ trash_id }}';#}
+        getData();
+
+        function getData() {
+
+            $.getJSON('/trash_ajax_data/{{ trash_id }}', function (data) {
+                //返回值 ret 在这里是一个列表
+                var time = data.time;
+                var weights = data.weight;
+                var heights = data.height;
+                $('.trash_current_weight').text(data.weight_now);
+                $('.trash_current_height').text(data.height_now);
+
+                var hour_data = data.hour_dict2;
+                var hour_dict_height = data.hour_dict_height;
+
+
+                var ctx = document.getElementById("weightchart").getContext('2d');
+                var ctx2 = document.getElementById("heightchart").getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: time,
+                        datasets: [{
+                            label: '重量顯示', // Name the series
+                            data: weights, // Specify the data values array
+                            fill: false,
+                            borderColor: '#2196f3', // Add custom color border (Line)
+                            backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
+                            borderWidth: 1, // Specify bar border width,
+                        }]
+                    },
+                    options: {
+                        responsive: true, // Instruct chart js to respond nicely.
+                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                    }
+                });
+                var myChart2 = new Chart(ctx2, {
+                    type: 'line',
+                    data: {
+                        labels: time,
+                        datasets: [{
+                            label: '高度顯示', // Name the series
+                            data: heights, // Specify the data values array
+                            fill: false,
+                            borderColor: '#ccc', // Add custom color border (Line)
+                            backgroundColor: '#ccc', // Add custom color background (Points and Fill)
+                            borderWidth: 1, // Specify bar border width,
+                        }]
+                    },
+                    options: {
+                        responsive: true, // Instruct chart js to respond nicely.
+                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                    }
+                });
+                {#    處理 weight  #}
+                weight_labels = {"5以下": 0, "5~10": 0, "10~15": 0, "15~20": 0, "20以上": 0}
+                for (var i = 0; i < weights.length; i++) {
+                    if (weights[i] < 5) {
+                        weight_labels["5以下"] += 1
+                    } else if (weights[i] > 5 && weights[i] < 10) {
+                        weight_labels["5~10"] += 1
+                    } else if (weights[i] > 10 && weights[i] < 15) {
+                        weight_labels["10~15"] += 1
+                    } else if (weights[i] > 15 && weights[i] < 20) {
+                        weight_labels["15~20"] += 1
+                    } else {
+                        weight_labels["20以上"] += 1
+                    }
+                }
+                height_labels = {"0~5cm": 0, "5~10cm": 0, "10~15cm": 0, "15~20cm": 0, "20cm以上": 0}
+                for (var i = 0; i < weights.length; i++) {
+                    if (heights[i] < 5) {
+                        height_labels["0~5cm"] += 1
+                    } else if (heights[i] > 5 && heights[i] < 10) {
+                        height_labels["5~10cm"] += 1
+                    } else if (heights[i] > 10 && heights[i] < 15) {
+                        height_labels["10~15cm"] += 1
+                    } else if (heights[i] > 15 && heights[i] < 20) {
+                        height_labels["15~20cm"] += 1
+                    } else {
+                        height_labels["20cm以上"] += 1
+                    }
+                }
+                var ctx3 = document.getElementById("weight_statics_chart").getContext('2d');
+                var chart3 = new Chart(ctx3, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(height_labels),
+                        datasets: [{
+                            data: Object.values(height_labels),
+                            backgroundColor: [
+                                'rgba(255, 99, 132)',
+                                'rgba(54, 162, 235)',
+                                'rgba(255, 206, 86)',
+                                'rgba(75, 192, 192)',
+                                'rgba(153, 102, 255)',
+                                'rgba(255, 159, 64)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true, // Instruct chart js to respond nicely.
+                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                    }
+                });
+                var ctx4 = document.getElementById("height_statics_chart").getContext('2d');
+                var chart4 = new Chart(ctx4, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(weight_labels),
+                        datasets: [{
+                            data: Object.values(weight_labels),
+                            backgroundColor: [
+                                'rgba(255, 99, 132)',
+                                'rgba(54, 162, 235)',
+                                'rgba(255, 206, 86)',
+                                'rgba(75, 192, 192)',
+                                'rgba(153, 102, 255)',
+                                'rgba(255, 159, 64)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true, // Instruct chart js to respond nicely.
+                        maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height
+                    }
+                });
+
+
+                {#    bar chart #}
+                var ctx = document.getElementById("time_bar_chart_weights");
+                var example = new Chart(ctx, {
+                        // 參數設定[註1]
+                        type: "bar", // 圖表類型
+                        data: {
+                            labels: Object.keys(hour_data), // 標題
+                            datasets: [{
+                                label: "g of weights", // 標籤
+                                data: Object.values(hour_data), // 資料
+                                backgroundColor: [ // 背景色
+                                    "#FF0000",
+                                    "#00FF00",
+                                    "#0000FF",
+                                ],
+                                borderWidth: 1 // 外框寬度
+                            }]
+                        }
+                    });
+
+                var ctx = document.getElementById("time_bar_chart_heights"),
+                    example = new Chart(ctx, {
+                        // 參數設定[註1]
+                        type: "bar", // 圖表類型
+                        data: {
+                            labels: Object.keys(hour_dict_height), // 標題
+                            datasets: [{
+                                label: "cm of heights", // 標籤
+                                data: Object.values(hour_dict_height), // 資料
+                                backgroundColor: [ // 背景色
+                                    "#00FF00",
+                                    "#0000FF",
+                                ],
+                                borderWidth: 1 // 外框寬度
+                            }]
+                        }
+                    });
+            })
+            {#var time =#}
+            {#{{ data.time|safe }}#}
+            {#var weights =#}
+            {#{{ data.weight|safe }}#}
+            {#var heights =#}
+            {#{{ data.height|safe }}#}
+            {#var hour_data = {{ hour_dict2|safe }}#}
+            {#var hour_dict_height = {{ hour_dict_height|safe }}#}
+
+        }
+
+        function myrefresh() {
+            getData();
+        }
+
+
+
+        setInterval('myrefresh()', 5000);
+    </script>
+{% endblock %}
+

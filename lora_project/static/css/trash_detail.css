@@ -7,14 +7,30 @@
     color: black;
     font-size: 20px;
 }
+.trash_history_graph .graph_title{
+    margin-top: 10px;
+    text-align: center;
+    color: red;
+}
 
+.trash_statics{
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 50px;
+    padding-bottom: 10px;
+
+
+}
 
 .trash_current_data{
     display: flex;
 
 }
+.trash_history_graph{
+     margin: 0 auto;
+     width:50%;
 
-
+}
 
 .trash_weight_field{
     width: 200px;
@@ -38,4 +54,16 @@
     right: 34px;
     bottom: 4px;
     font-size: 30px;
+}
+
+@media (max-width: 575.98px) {
+    .trash_history_graph{
+        width: 100%;
+        margin-bottom: 50px;
+    }
+
+ }
+
+.page-footer{
+    height: 100px;
 }

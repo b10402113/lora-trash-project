@@ -27,7 +27,7 @@ class collect_trash:
         final_output = []
         for i in range(0, len(output) - 1):
             final_output.append(
-                [output[i], output[i + 1], i])
+                [output[i], output[i + 1]])
         return final_output
 
     # edge_calculation evaluates the set of distances between each vertices

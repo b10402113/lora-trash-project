@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+{% endblock %}
+{% block css %}
+    <link href="{% static 'css/event.css' %}" rel="stylesheet"/>
+{% endblock %}
+
+{% block content %}
+    <div class="content">
+        <form  method="post" action="api/post_trash_data/">
+            <div class="form-group">
+                <p class="title-field">POST測試</p>
+            </div>
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Example select</label>
+                <select class="form-control" id="exampleFormControlSelect1" name="trash_id">
+                    {% for location in trash_cans %}
+                    <option value="{{ location.id }}">{{ location.tloaction_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="weight">輸入目前重量</label>
+                <input type="number" class="form-control" placeholder="ex: 20" name="weight" />
+            </div>
+            <div class="form-group">
+                <label for="height">輸入目前高度</label>
+                <input type="number" class="form-control" placeholder="ex: 5" name="height">
+            </div>
+            <input class="btn btn-primary path_btn" type="submit" value="POST" />
+        </form>
+    </div>
+{% endblock %}

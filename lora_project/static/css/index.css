@@ -12,3 +12,17 @@
     height: 40px;
     margin-right: 30px;
 }
+.path-img{
+    width:80%;
+    display: block;
+}
+@media (max-width: 575.98px) {
+    .path-img{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .form{
+        flex-wrap: wrap;
+    }
+
+ }

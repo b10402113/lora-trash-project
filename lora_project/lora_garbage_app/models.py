@@ -9,6 +9,7 @@ class TrashInfo(models.Model):
     tlocation_weight = models.IntegerField()
     tlocation_hight = models.IntegerField()
     tpub_date = models.DateField(null=False)
+    send_email_bit = models.BooleanField(default=False)
 
     def __str__(self):# 在Python3中用 __str__ 代替 __unicode__
         return str(self.tloaction_name)
