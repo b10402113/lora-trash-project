@@ -10,3 +10,21 @@
     border-radius: 30px;
     font-size: 30px;
 }
+body{
+    height: 100%;
+    /*background-color: #212529;*/
+}
+.list-group-item{
+    border-bottom: 1px solid #cccccc;
+}
+.trash_can_title{
+    background-color: #ccc;
+    border-radius: 2px;
+    padding: 10px;
+    padding-left: 30px;
+    margin-top: 20px;
+    font-size: 20px;
+}
+.bg-dark{
+    background-color: #343a40 !important;
+}

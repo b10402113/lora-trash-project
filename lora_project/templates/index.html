@@ -15,11 +15,14 @@
 {% endblock %}
 
 {% block content %}
-    <div class="title-field">
-            收垃圾路徑繪圖
+    <div class="content">
+
     </div>
+    <p class="trash_can_title" style="color: #545b62;">
+            收垃圾路徑繪圖
+    </p>
     <img class="path-img" src="{% static 'img/image.jpg' %}" alt=""  />
-    
+
     <div class="path_generate_section">
         <form method="post" action="api/path_generate/" class="form">
             <p class="path_btn">選擇起點</p>
@@ -37,7 +40,7 @@
             <input class="btn btn-primary path_btn" id="pathBtn" type="submit" value="產生路徑" />
         </form>
 
-        <img class="path-img" src="/display_image" alt="" />
+        <img class="path-img" src="/display_image" alt="" style="display: block;"/>
 
     </div>
 

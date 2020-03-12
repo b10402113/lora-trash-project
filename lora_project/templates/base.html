@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Simple Sidebar - Start Bootstrap Template</title>
+  <title>LORA 垃圾管理系統</title>
 
   <!-- Bootstrap core CSS -->
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
@@ -19,6 +19,7 @@
   <link href="{% static 'css/base.css' %}" rel="stylesheet">
   <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
     {% block css %}
     {% endblock %}
 
@@ -29,14 +30,14 @@
   <div class="d-flex" id="wrapper">
 
     <!-- Sidebar -->
-    <div class="bg-light border-right" id="sidebar-wrapper">
-      <div class="sidebar-heading">Lora Trash System </div>
+    <div class="bg-light" id="sidebar-wrapper">
+      <div class="sidebar-heading bg-light">Lora Trash System </div>
       <div class="list-group list-group-flush tags">
-        <a href="/" class="list-group-item list-group-item-action bg-light">Trash Can Overview</a>
-        <a href="/overview" class="list-group-item list-group-item-action bg-light">Overview</a>
-        <a href="/event" class="list-group-item list-group-item-action bg-light">Events</a>
-        <a href="/profile" class="list-group-item list-group-item-action bg-light">Profile</a>
-        <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+        <a href="/" class="list-group-item list-group-item-action bg-light" >Trash Can Overview</a>
+        <a href="/overview" class="list-group-item list-group-item-action bg-light" >Overview</a>
+        <a href="/event" class="list-group-item list-group-item-action bg-light" >Events</a>
+        <a href="/profile" class="list-group-item list-group-item-action bg-light" >Profile</a>
+        <a href="#" class="list-group-item list-group-item-action bg-light" >Status</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->
@@ -44,8 +45,8 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
 
-      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-        <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+      <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-left">
+        <button class="btn btn-dark" id="menu-toggle">Toggle Menu</button>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>

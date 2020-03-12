@@ -1,5 +1,8 @@
 .path_generate_section{
-    height: 300px;
+    height: 100%;
+}
+.bg-adark{
+    background-color: #212529 !important;
 }
 .form{
     display: flex;

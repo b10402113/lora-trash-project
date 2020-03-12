@@ -8,9 +8,9 @@
 
 {% block content %}
     <div class="content">
-        <div class="title-field">
+        <p class="trash_can_title" style="color: #545b62;">
             垃圾桶資訊
-        </div>
+        </p>
         <div class="garbage" >
             <div class="row" >
                 {% for trash_can in trash_cans %}
@@ -43,12 +43,10 @@
         });
         for (var i = 0; i < weights.length; i++) {
             weight = weights[i].innerHTML;
-            if (weight >= 0 && weight <= 10) {
+            if (weight >= 0 && weight <= 1000) {
                 cards[i].style.backgroundColor = '#41CCAE';
-            } else if (weight > 10 && weight <= 15) {
+            } else if (weight > 1000 && weight <= 2000) {
                 cards[i].style.backgroundColor = '#F2E896';
-            } else if(weight >= 15 && weight <= 20){
-                cards[i].style.backgroundColor = '#FFD9E7';
             } else{
                 cards[i].style.backgroundColor = '#FF3232';
                 cards[i].style.color = 'white';
